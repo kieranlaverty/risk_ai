@@ -1,17 +1,26 @@
 """
 This will contain the risk board
 """
-import territory
+import territory as t
 import continent as c
-
+import player as p
+import random
 
 class board():
 
-    def __init__(self, continentsId = None, map = None) -> None:
+    def __init__(self, continentsId = None, map = None, player = ["red", "blue"]) -> None:
         
         print("Creating Board")
         self.create_board(continentsId, map)
 
+        self.player = []
+        for p in player:
+            self.player.append(p.player(p))
+        
+        #This shuffle will determine turn order
+        random.shuffle(self.player)
+
+        return
         
 
 
@@ -85,10 +94,14 @@ class board():
                 "Eastern Australia" : [5, ["New Guinea", "Western Australia"]]
                 }
 
+            for t in self.map:
+                self.map.append(t.territory(t))
             return
         else:
             self.continentsId = continentsId
             self.map = map
+            for t in self.map:
+                self.map.append(t.territory(t))
             return
 
     def check_map_is_nondirectional(self, map):
