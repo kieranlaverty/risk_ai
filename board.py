@@ -19,6 +19,7 @@ class board():
         
         #This shuffle will determine turn order
         random.shuffle(self.player)
+        self.turn = 0
 
         return
 
@@ -115,4 +116,18 @@ class board():
         
         return True
 
+    def claims(self):
+        pass
 
+    def place_troops(self):
+        pass
+
+    def assign_starting_troops(self):
+        pass
+
+    def start_game(self):
+        self.claims()
+        self.assign_starting_troops()
+        self.place_troops()
+
+        return
