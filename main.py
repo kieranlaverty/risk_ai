@@ -6,7 +6,7 @@ risk ai
 import board as b
 
 def main():
-    game = b.board()
+    game = b.board(player = ["red", "yellow", "blue", "green", "purple", "orange"])
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 """
 This will contain the risk board
 """
-import territory as t
+import territory as terr
 import continent as c
-import player as p
+import player as play
 import random
 
 class board():
@@ -15,14 +15,12 @@ class board():
 
         self.player = []
         for p in player:
-            self.player.append(p.player(p))
+            self.player.append(play.player(p))
         
         #This shuffle will determine turn order
         random.shuffle(self.player)
 
         return
-        
-
 
     #creates board and if not given both continents and a map with default to basic risk map
     def create_board(self, continentsId = None, map = None):
@@ -94,8 +92,8 @@ class board():
                 "Eastern Australia" : [5, ["New Guinea", "Western Australia"]]
                 }
 
-            for t in self.map:
-                self.map.append(t.territory(t))
+            for i in self.map:
+                self.map[i].append(terr.territory(i))
             return
         else:
             self.continentsId = continentsId
@@ -116,4 +114,5 @@ class board():
                     return False
         
         return True
+
 
