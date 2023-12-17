@@ -116,17 +116,26 @@ class board():
         
         return True
 
-    def claims(self):
+    #the purpose of this function is to search the map for strategic points
+    #this is done by finding cycles with the highest troop income divided by links out of cycle
+    def find_best_areas(self):
         pass
+    
 
+    def claims_ai(self):
+        pass
+    
+    def claims_human(self):
+        pass
+    
     def place_troops(self):
         pass
 
     def assign_starting_troops(self):
         pass
-
+ 
     def start_game(self):
-        self.claims()
+        self.claims_ai()
         self.assign_starting_troops()
         self.place_troops()
 
