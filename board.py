@@ -133,12 +133,30 @@ class board():
         for i in self.map:
             self.map[i].append(terr.territory(i))
             self.cycles[self.map[i][0]][0].append(i)
-            
-            #finds the links out of the cycle
-            for j in self.map[i][1]:
-                if self.cycles[]:
-                    pass
 
+            #makes a empty list to hold links out of continent
+            self.cycles[self.map[i][0]][1][i] = []
+            
+            #finds the links out of the continent
+            for j in self.map[i][1]:
+                #find the continent of j
+                check = self.map[j][0]
+                if check != self.map[i][0]:
+                    #adds to list out for each continent
+                    self.cycles[self.map[i][0]][1][i].append(j)
+
+
+            #this part of the function is incomplete
+            for x in self.cycles:
+                links_out = 0
+                holder = []
+                for y in self.cycles[x][1]:
+                    
+                    #this contains a condition to possibly expand or have an important terrritory
+                    if y in holder:
+                        pass
+                    else:
+                        holder.append([{y : x}])
 
     
     #tries to make claim in best areas with least competition

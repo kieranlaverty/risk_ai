@@ -9,3 +9,7 @@ class continent():
     def __init__(self, bonus = 2, name = "roshar") -> None:
         self.bonus = bonus
         self.name = name 
+
+    def set_value(self, value) -> None:
+        self.value = value
+        return
