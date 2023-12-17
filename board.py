@@ -93,14 +93,17 @@ class board():
                 "Eastern Australia" : [5, ["New Guinea", "Western Australia"]]
                 }
 
+            #need to check what this does or if i made a mistake somewhere
             for i in self.map:
                 self.map[i].append(terr.territory(i))
             return
+        
         else:
             self.continentsId = continentsId
             self.map = map
             for t in self.map:
-                self.map.append(t.territory(t))
+                self.map.append(terr.territory(t))
+
             return
 
     def check_map_is_nondirectional(self, map):
@@ -118,14 +121,27 @@ class board():
 
     #the purpose of this function is to search the map for strategic points
     #this is done by finding cycles with the highest troop income divided by links out of cycle
-    #highest value cycle must come from areas with troop bonus (continents) or individual territories being 1
+    #highest value cycle must come from areas with troop bonus (continents) else individual territories being 1
     #therefore finding the value of each continent then trying to find if a node add will decrease links
-    #out will increase values
+    #out will increase the value of controlling the cycle
     def find_best_areas(self, search = []):
-        pass
+        
+        #self.cycle = continentid to match index [[territories in cycle], {territory : links out}]
+        self.cycles = [[[],[]] for _ in len(self.continentsId)]
+        
+        #start with the continents as the starting point for each cycle then optimize
+        for i in self.map:
+            self.map[i].append(terr.territory(i))
+            self.cycles[self.map[i][0]][0].append(i)
+            
+            #finds the links out of the cycle
+            for j in self.map[i][1]:
+                if self.cycles[]:
+                    pass
+
 
     
-
+    #tries to make claim in best areas with least competition
     def claims_ai(self):
         pass
     
