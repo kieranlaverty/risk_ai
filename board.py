@@ -166,6 +166,16 @@ class board():
 
             #optimize by checking to see if there is any strategic point that would decrease the number of
             #way to attack the cycle of territories
+            unchanged = False
+            while (unchanged == False):
+                for l in links_out:
+                    temp = c
+                    #add l to temp
+
+
+                    #check if by add l to c if temp is better than the original
+
+                    #check1, check2 = self.count_links()
         return
     
 
