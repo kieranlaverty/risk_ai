@@ -131,6 +131,7 @@ class board():
         
         #start with the continents as the starting point for each cycle then optimize
         for i in self.map:
+            #this line belongs in board set up 
             self.map[i].append(terr.territory(i))
             self.cycles[self.map[i][0]][0].append(i)
 
@@ -157,6 +158,33 @@ class board():
                         pass
                     else:
                         holder.append([{y : x}])
+    
+    # given a list cycle [[territories], {territory: link out}] this function will return the number of
+    # links out of the cycle
+    def count_links(self, cycle):
+        count = 0
+        links_out = []
+        links_in = []
+
+        # t is the name of the territory being evaluated
+        for t in cycle[1]:
+            #i is the name of the connecting territory
+            for i in cycle[1][t]:
+                #if i is already visited then move on
+                if i in links_out:
+                    pass
+                #if i is not in the cycle then it must be out side the cycle
+                #i is then added to links out and count
+                elif not ( i in cycle[0]):
+                    count += 1
+                    links_out.append(i)
+                    links_in.append(t)
+
+            #find edge territories
+            for o in links_out:
+                pass
+
+        return (count, links_out, links_in)
 
     
     #tries to make claim in best areas with least competition
