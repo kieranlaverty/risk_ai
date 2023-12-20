@@ -121,9 +121,12 @@ class board():
 
     #the purpose of this function is to search the map for strategic points
     #this is done by finding cycles with the highest troop income divided by links out of cycle
-    #highest value cycle must come from areas with troop bonus (continents) else individual territories being 1
-    #therefore finding the value of each continent then trying to find if a node add will decrease links
-    #out will increase the value of controlling the cycle
+
+    #highest value cycle must come from areas with troop bonus (continents) else 
+    #individual territories being 1
+    
+    #therefore finding the value of each continent then trying to find if a territory add will decrease links
+    #in and increase the value of controlling the cycle
     def find_best_areas(self, search = []):
         
         #self.cycle = continentid to match index [[territories in cycle], {territory : links out}, 
