@@ -126,19 +126,25 @@ class board():
     #out will increase the value of controlling the cycle
     def find_best_areas(self, search = []):
         
-        #self.cycle = continentid to match index [[territories in cycle], {territory : links out}]
-        self.cycles = [[[],[]] for _ in len(self.continentsId)]
+        #self.cycle = continentid to match index [[territories in cycle], {territory : links out}, 
+        #[[links out],[boarder]]]
+        self.cycles = [[[],[],[[],[]]] for _ in len(self.continentsId)]
         
         #start with the continents as the starting point for each cycle then optimize
+
+        #go through each one of the territories (i) on the map
         for i in self.map:
-            #this line belongs in board set up 
-            self.map[i].append(terr.territory(i))
+
+            #add each territory to an individual continent for a cycle
+            #self.cycle = continentid to match index [[territories in cycle], {territory : links out}, 
+            #[[links out],[boarder]]]
             self.cycles[self.map[i][0]][0].append(i)
 
             #makes a empty list to hold links out of continent
             self.cycles[self.map[i][0]][1][i] = []
             
             #finds the links out of the continent
+            # j is links out to the territory i
             for j in self.map[i][1]:
                 #find the continent of j
                 check = self.map[j][0]
@@ -147,22 +153,22 @@ class board():
                     self.cycles[self.map[i][0]][1][i].append(j)
 
 
-            #this part of the function is incomplete
-            for x in self.cycles:
-                links_out = 0
-                holder = []
-                for y in self.cycles[x][1]:
-                    
-                    #this contains a condition to possibly expand or have an important terrritory
-                    if y in holder:
-                        pass
-                    else:
-                        holder.append([{y : x}])
+        for idx, c in enumerate(self.cycles):
+            links_out, links_in = self.count_links(c)
+            #self.cycle = continentid to match index [[territories in cycle], {territory : links out}, 
+            #[[links out],[boarder]]]
+            self.cycles[idx][2] = [[links_out], [links_in]]
+            
+
+
+            #optimize by checking to see if there is any strategic point that would decrease the number of
+            #way to attack the cycle of territories
+        return
     
+
     # given a list cycle [[territories], {territory: link out}] this function will return the number of
     # links out of the cycle
     def count_links(self, cycle):
-        count = 0
         links_out = []
         links_in = []
 
@@ -170,21 +176,17 @@ class board():
         for t in cycle[1]:
             #i is the name of the connecting territory
             for i in cycle[1][t]:
-                #if i is already visited then move on
-                if i in links_out:
-                    pass
                 #if i is not in the cycle then it must be out side the cycle
                 #i is then added to links out and count
-                elif not ( i in cycle[0]):
-                    count += 1
+                if not ( i in cycle[0]):
                     links_out.append(i)
                     links_in.append(t)
 
-            #find edge territories
-            for o in links_out:
-                pass
+                    #save territory that is on the edge of the cycle
+                    if not (t in links_in):
+                        links_in.append(t)
 
-        return (count, links_out, links_in)
+        return (links_out, links_in)
 
     
     #tries to make claim in best areas with least competition
