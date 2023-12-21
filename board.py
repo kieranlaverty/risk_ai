@@ -121,17 +121,15 @@ class board():
 
     #the purpose of this function is to search the map for strategic points
     #this is done by finding cycles with the highest troop income divided by links out of cycle
-
     #highest value cycle must come from areas with troop bonus (continents) else 
     #individual territories being 1
-    
     #therefore finding the value of each continent then trying to find if a territory add will decrease links
     #in and increase the value of controlling the cycle
-    def find_best_areas(self, search = []):
+    def find_best_areas(self):
         
         #self.cycle = continentid to match index [[territories in cycle], {territory : links out}, 
         #[[links out],[boarder]]]
-        self.cycles = [[[],[],[[],[]]] for _ in len(self.continentsId)]
+        self.cycles = [[[],{},[[],[]]] for _ in range(len(self.continentsId))]
         
         #start with the continents as the starting point for each cycle then optimize
 
@@ -168,15 +166,28 @@ class board():
             #way to attack the cycle of territories
             unchanged = False
             while (unchanged == False):
+                unchanged = True
                 for l in links_out:
                     temp = c
+                    temp.append([])
                     #add l to temp
-
-
+                    temp[0].append(l)
+                    temp[1][l] = []
+                    for li in self.map[l][1]:
+                        if not (li in temp[0]):
+                            temp[1][l].append(li)
                     #check if by add l to c if temp is better than the original
-
-                    #check1, check2 = self.count_links()
-        return
+                    c[2], c[3] = self.count_links(temp)
+                    
+                    if len(c[3]) < len(links_in):
+                        #temp is better
+                        temp[0] = list(set(temp[0]))
+                        temp[2] = list(set(temp[2]))
+                        temp[3] = list(set(temp[3]))                        
+                        self.cycles[idx] = temp
+                        c = self.cycles[idx]
+                        unchanged = False
+        return self.cycles
     
 
     # given a list cycle [[territories], {territory: link out}] this function will return the number of
